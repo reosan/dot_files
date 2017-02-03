@@ -1,0 +1,1000 @@
+ls
+sudo vi timesyncd.conf 
+cd system/
+ls
+sudo ntpd
+ntpq
+ntpq -p
+sudo vi timesyncd.conf 
+ls
+cd ..
+ls
+sudo vi timesyncd.conf 
+ntpq -p
+clock
+sudo clock
+sudo clock --help
+sudo clock -systz
+sudo clock --systz
+date
+sudo clock -s
+date
+cd /etc
+ls
+cd grub.d
+sudo cd grub.d
+ls
+cd grub.d
+su 
+printenv | grep -i tz
+cd .bashrc
+cd
+vi .bashrc
+. .bashrc
+a
+tty
+a 2> /dev/pts/0
+tail -n 10 /dev/stderr
+clear
+cd 
+cd Videos/
+ls
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+sleep 2
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+echo hoge > cat
+ls
+rm cat head tail
+ls
+cat < echo hoge
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+./photoframe.sh VID_20161104_205817.mp4
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+cd Videos/
+ls
+ffprobe -show_streams VID_20161104_205817.mp4
+ffprobe -show_entries VID_20161104_205817.mp4
+ffprobe -show_entries format VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+awk '{print 1/2}'
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+vi photoframe.sh 
+./photoframe.sh VID_20161104_205817.mp4
+echo 94.96 | awk '{h = $1 / 60; print $h}'
+echo 94.96 | awk '{h = 1 / 60; print $h}'
+echo 94.96 | awk '{h = 1 / 60; print h}'
+vi photoframe.sh 
+echo 94.96 | awk '{h = 1 / 60; print $h}'
+echo 94.96 | awk '{h = 1 / 60; print h}'
+./photoframe.sh VID_20161104_205817.mp4
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+colors
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+tail -f /dev/stderr
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+newline
+vi photoframe.sh 
+./photoframe.sh 結婚式_01.mp4 
+sudo dnf install emacs
+emacs &
+emacs
+cd
+ls -a
+cd .emacs.d/
+ls
+cd auto-save-list/
+ls
+ls -
+ls -a
+cd ..
+ls -a
+cd ..
+cd .config/
+ls
+cd ..
+vi .emacs
+cd .emacs.d/
+vi init.el
+emacs -nw init.el 
+emacs
+cd ..
+ls
+rm .emacs
+emacs
+sync
+ps aux | grep ffmpeg
+cd Videos/
+ls
+nautilas
+nautilus
+emacs photoframe.sh &
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+ls
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+clear
+cd Videos/
+ls
+emacs -nw ~/.emacs.d/init.el
+vi ~/.bash_aliases 
+em photoframe.sh
+. .bashrc
+. ~/.bashrc
+ps aux | grep ffmpeg
+ps aux | grep tail
+ps
+ps a
+ps aux
+tty
+ps aux | grep pts/0
+ls
+ps aux | grep pts/0
+ls /proc
+cd 12224
+cd /proc/12224
+ls
+cd fd
+ls
+cat 2
+less 2
+less -f 2
+kill %%
+less -f 2
+cat 2
+kill %%
+ls -al
+cd ../..
+cd ../../
+pwd
+cd /proc
+ps aux | grep ffmpeg
+cd 12807/fd
+ls
+ls -al
+tail /tmp/tmp.Zf1Ab3qwg5 
+tail -f /tmp/tmp.Zf1Ab3qwg5 
+tail -f -n 1 /tmp/tmp.Zf1Ab3qwg5 
+ps aux | grep ffmpeg
+cd /proc/13293/fd
+ls -as
+ls -al
+tail -f -n 1 /tmp/tmp.3kJzATJ2fh 
+bg
+fg
+kill %1
+ps aux | bash
+ps aux | grep bash
+cd /proc/13901/fd
+tail -f -n 1 2
+ls -al
+ps aux | grep bash
+ps u
+cd Videos/
+ls
+./photoframe.sh LINE_MOVIE_1468583881843.mp4 
+ps
+psu
+ps u
+sudo dnf upgrade
+cd /etc
+ls
+cd default/
+ls
+sudo grub
+sudo vi grub
+pushd /etc/grub.d/
+ls
+su 
+mkdir usrfc
+exit
+reboot
+su
+ps u
+cd Videos/hina/
+ls
+ls /dev
+cd /etc 
+ls | grep sys
+journalctl 
+journalctl -110
+journalctl | less
+cd /dev/sdc
+ls /mnt
+ls /dev
+cd /dev/sdc1
+lsof
+lsof | less
+lsof | grep /dev/sdc
+cd /mnt
+ls
+rm usbb/
+rm -r usbb/
+ls -al
+cd usbb
+ls
+cd ..
+rm -r usbb
+sudo rm -r usbb
+ls
+sudo mount /dev/sda3 /mnt/win
+sudo mount -r /dev/sda3 /mnt/win
+cd win
+ls
+cd Users/
+ls
+cd Taguchi/Videos/
+ls
+cd 陽愛/
+ls
+mkdir /home/reosan/Videos/hina
+cp * /home/reosan/Videos/hina/
+cd 
+sudo umount /dev/sda3
+ls /mnt
+cd Videos/
+ls
+cd hina
+ls
+for i in * ;do ../movie_converter.sh $i; done;
+cd ~/music
+cd ~/Music/
+ls
+cd Pioneer_T750/
+ls
+ffmpeg -i 01あさが来た__365日の紙飛行機.mp3 -vn -af volumedetect -f null -
+ffmpeg -i 01あさが来た__365日の紙飛行機.mp3 -af loudnorm
+ffmpeg -i 01あさが来た__365日の紙飛行機.mp3 -af loudnorm 01あさが来た__365日の紙飛行機.mp3 
+ffmpeg -i 01あさが来た__365日の紙飛行機.mp3 -af loudnorm 01あさが来た__365日の紙飛行機norm.mp3 
+ffmpeg -i 01あさが来た__365日の紙飛行機.mp3 -vn -af volumedetect -f null -
+ffmpeg -i 01あさが来た__365日の紙飛行機norm.mp3 -vn -af volumedetect -f null -
+cd ~/Videos/
+cp movie_converter.sh ~/Music/
+cd ../Music/
+ls
+mv movie_converter.sh music_normalizer.sh
+ls
+vi music_normalizer.sh 
+cd 
+cd Videos/
+vi movie_converter.sh 
+ls
+rm photoframe.sh~ 
+./movie_converter.sh hina/_LINE_MOVIE_1478559549188.mov 
+vi movie_converter.sh 
+./movie_converter.sh hina/_LINE_MOVIE_1478559549188.mov 
+man trap
+
+./movie_converter.sh hina/_LINE_MOVIE_1478559549188.mov 
+cp movie_converter.sh /hina
+cp movie_converter.sh hina
+cd hina/
+./movie_converter.sh _LINE_MOVIE_1478559549188.mov 
+ls
+rm __LINE_MOVIE_1478559549188.mov 
+vi movie_converter.sh 
+./movie_converter.sh  _LINE_MOVIE_1478559549188.mov 
+vi movie_converter.sh 
+./movie_converter.sh  _LINE_MOVIE_1478559549188.mov 
+cp movie_converter.sh ~/bin
+sudo cp movie_converter.sh ~/bin
+cd ~/Music/
+ls
+vi music_normalizer.sh 
+ls
+mv music_normalizer.sh Pioneer_T750/
+cd Pioneer_T750/
+ls
+vi music_normalizer.sh 
+./music_normalizer.sh 01あさが来た__365日の紙飛行機.mp3 
+vi music_normalizer.sh 
+./music_normalizer.sh 01あさが来た__365日の紙飛行機.mp3 
+vi ~/bin/movie_converter.sh 
+sudo vi ~/bin/movie_converter.sh 
+ls
+vi music_normalizer.sh 
+sudo vi ~/bin/movie_converter.sh 
+./music_normalizer.sh 01あさが来た__365日の紙飛行機.mp3 
+vi music_normalizer.sh 
+./music_normalizer.sh 01あさが来た__365日の紙飛行機.mp3 
+vi music_normalizer.sh 
+./music_normalizer.sh 01あさが来た__365日の紙飛行機.mp3 
+cd ~/Videos/
+ls
+cd hina
+movie_converter.sh 20150504_220603.mp4 
+sudo vi ~
+sudo vi ~/bin/movie_converter.sh 
+movie_converter.sh 20150504_220603.mp4 
+a2ps
+cd /etc
+ls | grep lprng
+sudo mkdir -p /etc/lprng/lpd
+ls
+lprng
+lpr
+sudo rm -r lprng/
+lpq -a
+lpq
+echo $PRINTER
+ls printcap 
+less printcap
+cd 
+cd -
+less printcap
+cd
+lpr -#2 -P EP-807A-Series yu-min 
+journalctl | less
+lsusb
+dmesg
+lpinfo
+lpinfo -v
+sudo lpinfo -v
+lpstat
+lpstat -s
+lpinfo -m
+lpinfo --help
+man lpinfo
+
+man lpoptions
+lpinfo -m | grep epson
+lpinfo -m | grep epson | grep 807
+man lpinfo
+lpinfo --make-and-model "epson 807" -m
+fg
+lpinfo --make-and-model "Epson 807" -m
+sudo find / -name ppd
+cd /usr/share/
+ls
+cd ppd
+ls
+cd Epson/
+ls
+cd epson-inkjet-printer-escpr/
+ls
+ls 
+ ls | grep 807
+sudo lpadmin -p EPSON_807A -E -v "usb://EPSON/EP-807A%20Series?serial=554758593034333615&interface=1" -m /usr/share/ppd/Epson/epson-inkjet-printer-escpr/Epson-EP-807A_Series-epson-escpr-en.ppd.gz 
+sudo lpadmin -p EPSON_807A -E -v "usb://EPSON/EP-807A%20Series?serial=554758593034333615&interface=1" -n /usr/share/ppd/Epson/epson-inkjet-printer-escpr/Epson-EP-807A_Series-epson-escpr-en.ppd.gz 
+sudo lpadmin -p EPSON_807A -E -v "usb://EPSON/EP-807A%20Series?serial=554758593034333615&interface=1" -m /usr/share/ppd/Epson/epson-inkjet-printer-escpr/Epson-EP-807A_Series-epson-escpr-en.ppd.gz 
+sudo lpadmin -p EPSON_807A -E -v "usb://EPSON/EP-807A%20Series?serial=554758593034333615&interface=1" 
+lpoptions -d EPSON_807A
+lpstat -s
+cd
+lpr yu-min 
+find / -name pdf
+sudo find / -name pdf
+sed '/^$/d' -i yu-min 
+cat yu-min 
+cat yu-min  | less
+cd Documents/
+evince Untitled\ 1.pdf 
+lpstat -p EP-807A
+lpstat -p EP-807A-Series
+bg
+cd /usr/share/cups/
+ls
+cd model/
+ls
+cd ../usb
+ls
+lpoptions -p EPSON_807A -l
+sudo lpadmin -p EP_807A -E -v "usb://EPSON/EP-807A%20Series?serial=554758593034333615&interface=1" -P /usr/share/ppd/Epson/epson-inkjet-printer-escpr/Epson-EP-807A_Series-epson-escpr-en.ppd.gz 
+lpopsions -d EP_807A
+lpoptions -d EP_807A
+lpstat -p EP_807A
+lpoptions -p EP_807A -l
+cd
+evince Documents/Untitled\ 1.pdf 
+exit
+jobs
+fg
+exit
+lpinfo -v
+sudo lpinfo -v
+exit
+mv Download/music_randam.sh Music/
+cd Music/
+s
+ls
+chmod +x music_randam.sh 
+ls
+ls -l
+cat music_randam.sh 
+./music_randam.sh 
+./music_randam.sh a b c d e f
+cd iTunes/
+ls
+ls | sed -e 's/ //g'
+ls | sed -e 's/ /------/g'
+ls | sed -e 's/[ 012456789]/-/g'
+ls | sed -e 's/\[ 012456789\]/-/g'
+ls | sed -e 's/[ 012456789]//g'
+ls | sed -e 's/[ 012456789-]//g'
+set
+set -o
+set -e
+set -o
+echo $(/bin/ls)
+for i in $(/bin/ls);do echo $i;doe
+for i in $(/bin/ls);do echo $i;done
+for i in "$(/bin/ls)";do echo $i;done
+man ls
+for i in $(/bin/ls -q);do echo $i;done
+/bin/ls -q
+/bin/ls -Q
+/bin/ls -Q | xargs -0 echo
+/bin/ls -q | xargs -0 echo
+for i in $(/bin/ls -q | xargs -0 -n 1 echo
+/bin/ls -q | xargs -0 -n 1
+for i in (/bin/ls -q | xargs -0 -n 1); do echo $i;done
+journalctl 
+for i in (/bin/ls -q | xargs -0 -n 1); do echo $i; done
+for i in $(/bin/ls -q | xargs -0 -n 1); do echo $i; done
+cd Music/iTunes/
+for i in $(/bin/ls -q | xargs -0 -n 1); do echo $i; done
+echo $IFS
+man echo
+echo $IFS -n
+printenv | grep -i fs
+printenv
+echo $IFS -ne
+echo "$IFS" -ne
+echo -ne "$IFS"
+echo -ne "$IFS" | cat -A
+IFS=\n
+echo -ne "$IFS" | cat -A
+IFS="\n"
+echo -ne "$IFS" | cat -A
+exit
+echo $IFS | cat -A
+sudo dnf autoremove
+dnf search clean-up
+dnf search cleanup
+dnf search yum-utils
+dnf search dnf-utils
+sudo dnf install yum-utils
+package-cleanup --oldkernerls
+package-cleanup --oldkernels
+sudo package-cleanup --oldkernels
+sudo vi /etc/grub.d/40_custom
+ls
+tail -n +3 <(cat <<EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EOF
+| sed '=')
+tail -n +3 <(cat <<EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EOF
+ | sed '=')
+cat << eof
+
+
+
+
+
+
+eof
+
+cat << eof
+
+
+
+
+
+
+eof
+
+| tail 
+echo $IFS | cat -A
+IFS=" \t\n"
+echo $IFS | cat -A
+echo -e $IFS | cat -A
+echo -e "$IFS" | cat -A
+echo -en "$IFS" | cat -A
+(IFS= for i in $(/bin/ls); do echo $i; done)
+(IFS=; for i in $(/bin/ls); do echo $i; done)
+cd Music/iTunes/
+(IFS=; for i in $(/bin/ls); do echo $i; done)
+(IFS=; for i in $(/bin/ls); do echo $i | sed 's/[ 0124567890]//g'; done)
+(IFS=; for i in $(/bin/ls); do echo $i | sed 's/[ 0124567890-]//g'; done)
+(IFS=; for i in $(/bin/ls); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS="\n"; for i in $(/bin/ls); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+ls
+(IFS="\n"; for i in $(/bin/ls -1); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+echo $IFS | cat -A
+echo "\n"
+echo -e "\n"
+echo "\\n"
+echo '\n'
+echo $DISPLA
+echo $DISPLAY
+echo "'$DISPLAY'"
+(IFS=" \n\t"; echo -e $IFS)
+(IFS=" \n\t"; echo -e "$IFS"\)
+(IFS=" \n\t"; echo -e "$IFS")
+(IFS=" \n\ta"; echo -ne "$IFS")
+(IFS=" a\na\ta"; echo -ne "$IFS")
+(IFS=; for i in $(/bin/ls -1); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS=; for i in $(/bin/ls -); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS="\n"; for i in $(/bin/ls ); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+echo "\e[n]"
+echo -e "\n"
+echo -en "\n" | xargs -I {} lf={}
+echo $lf
+echo -n $lf
+echo -en $lf
+echo -n "$lf"
+echo -n '$lf'
+echo -en "$lf"
+echo -en "$lf" | cat -A
+echo -en "\n" | xargs -0 -I {} lf={}
+echo -en "\n" | xargs -0 -I{} lf={}
+echo -en "abc" | xargs -I{} lf={}
+echo -en "abc" | xargs -I {} lf={}
+echo -en "abc" | xargs lf=
+declare lf a
+echo $lf
+man declare
+declare lf=1
+echo $lf
+echo 1
+echo 2 | xargs -I{} declare lf={}
+echo 2 | xargs  declare lf={}
+echo 2 | xargs -I{} builtin declare lf={}
+man command
+ls /bin/declare
+ls /sbin/declare
+vi declare.sh
+chmod +x declare.sh 
+mv declare.sh declare
+./declare abc=2
+echo $abc
+mv declare cd
+./cd ~
+vi cd
+./cd ..
+vi cd
+./cd ..
+ls /usr/bin
+/usr/bin/cd /usr/bin
+less /usr/bin/cd
+echo '~' | xargs cd
+echo / | xargs cd
+echo /home | xargs cd
+echo /home
+(exec cd ~)
+(exec eval "cd /home")
+IFS=" \t\n"
+echo $IFS | cat -A
+echo -e $IFS | cat -A
+echo -e "$IFS" | cat -A
+echo -en "$IFS" | cat -A
+(IFS= for i in $(/bin/ls); do echo $i; done)
+(IFS=; for i in $(/bin/ls); do echo $i; done)
+cd Music/iTunes/
+(IFS=; for i in $(/bin/ls); do echo $i; done)
+(IFS=; for i in $(/bin/ls); do echo $i | sed 's/[ 0124567890]//g'; done)
+(IFS=; for i in $(/bin/ls); do echo $i | sed 's/[ 0124567890-]//g'; done)
+(IFS=; for i in $(/bin/ls); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS="\n"; for i in $(/bin/ls); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+ls
+(IFS="\n"; for i in $(/bin/ls -1); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+echo $IFS | cat -A
+echo "\n"
+echo -e "\n"
+echo "\\n"
+echo '\n'
+echo $DISPLA
+echo $DISPLAY
+echo "'$DISPLAY'"
+(IFS=" \n\t"; echo -e $IFS)
+(IFS=" \n\t"; echo -e "$IFS"\)
+(IFS=" \n\t"; echo -e "$IFS")
+(IFS=" \n\ta"; echo -ne "$IFS")
+(IFS=" a\na\ta"; echo -ne "$IFS")
+(IFS=; for i in $(/bin/ls -1); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS=; for i in $(/bin/ls -); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+(IFS="\n"; for i in $(/bin/ls ); do mv $i $(echo $i | sed 's/[ 0124567890-]//g'); done)
+echo "\e[n]"
+echo -e "\n"
+echo -en "\n" | xargs -I {} lf={}
+echo $lf
+echo -n $lf
+echo -en $lf
+echo -n "$lf"
+echo -n '$lf'
+echo -en "$lf"
+echo -en "$lf" | cat -A
+echo -en "\n" | xargs -0 -I {} lf={}
+echo -en "\n" | xargs -0 -I{} lf={}
+echo -en "abc" | xargs -I{} lf={}
+echo -en "abc" | xargs -I {} lf={}
+echo -en "abc" | xargs lf=
+declare lf a
+echo $lf
+man declare
+declare lf=1
+echo $lf
+echo 1
+echo 2 | xargs -I{} declare lf={}
+echo 2 | xargs  declare lf={}
+echo 2 | xargs -I{} builtin declare lf={}
+man command
+ls /bin/declare
+ls /sbin/declare
+vi declare.sh
+chmod +x declare.sh 
+mv declare.sh declare
+./declare abc=2
+echo $abc
+mv declare cd
+./cd ~
+vi cd
+./cd ..
+vi cd
+./cd ..
+ls /usr/bin
+/usr/bin/cd /usr/bin
+less /usr/bin/cd
+echo '~' | xargs cd
+echo / | xargs cd
+echo /home | xargs cd
+echo /home
+(exec cd ~)
+(exec eval "cd /home")
+vi cd
+ls
+rm cd
+man fc
+echo hoge
+``cc''
+``r''
+``r cc''
+fc -l 10
+fc -l -10
+fg
+fc -l -30
+fc -l -50
+echo -n a
+echo b$(echo -n a)
+echo b$(echo  a)
+eval 'echo b$(echo  a)'
+echo "echo a{b,c}"
+echo a{a,c}
+echo "echo a${b,c}"
+cd Music/
+cd iTunes/
+ls
+line{a,b}
+echo line\ {a,b}
+bind -p
+bind -p | less
+man bind
+ftp
+pushd ~
+vi .inputrc 
+cp .inputrc inputrc.org
+bind -p | grep expan
+bind -p | grep v-expan
+bind -p | grep v-expan >> .inputrc
+vi .inputrc 
+bind -f .inputrc
+mv inputrc.org .inputrc
+bind -f .inputrc
+vi .inputrc
+exit
+cd Music/
+ls
+cd pioneerT750/
+ls
+cd iTunes/
+ls
+cd ..
+ls
+ls -l
+chmod -x *.mp3
+chmod +r *.mp3
+ls -l
+mv iTunes/* .
+ls
+rm -r iTunes/
+ls
+ls norm
+mv norm/music_random.sh ~/sh
+ls norm/rand/
+/bin/rm -r norm/
+ls
+for i in *;do ffmpeg -i $i -vn -af volumedetect -f null - | grep volume:;done
+for i in *;do ffmpeg -i $i -vn -af volumedetect -f null - 2>&1 | grep volume:;done
+ls
+echo $DISPLAY
+DISPLAY=':1'
+echo $DISPLAY
+xvfb
+Xvfb
+exit
+sudo yum update 
+ls
+mkdir python
+cd python
+wget https://github.com/mozilla/geckodriver/releases/download/v0.13.0/geckodriver-v0.13.0-linux32.tar.gz
+ls
+tar zxvf geckodriver-v0.13.0-linux32.tar.gz 
+ls
+rm geckodriver-v0.13.0-linux32.tar.gz 
+dnf search pip
+rpm -aq pip
+rpm -aq 
+rpm -aq | less
+pip3 install --update pip3
+pip3 install -update pip3
+pip3 install -U pip3
+pip install --upgrade pip
+sudo pip3 install selenium
+sudo pip install --upgrade pip
+sudo pip3 install selenium
+sudo pip install selenium
+sudo pip install pandas
+sudo pip install numpy
+sudo pip install pandas
+sudo dnf install pip3
+sudo dnf install pip
+sudo dnf search pip
+sudo dnf install python3-pip
+pip
+dnf
+sudo dnf remove python3-pip
+sudo yum remove python3-pip
+sudo dnf search python dev
+sudo dnf search python 
+sudo dnf search python3
+sudo dnf search python3 | less
+sudo dnf search python3-dev
+sudo dnf install python3-dev
+sudo dnf install python
+sudo pip install pandas
+sudo dnf search python2.7
+sudo dnf search python2
+sudo dnf search python2-devel
+sudo dnf search python2-lib
+sudo pip install pandas
+ls /tmp
+sudo dnf search python-dev
+sudo dnf install python-devel
+sudo pip install pandas
+sudo pip install matplotlib
+sudo dnf search openjdk
+sudo dnf install java-1.8.0-openjdk
+sudo dnf install java-1.8.0-openjdk-devel
+dnf search xvfb
+sudo dnf install xorg-x11-server-Xvfb
+sudo dnf install xvfb
+sudo dnf install Xvfb
+exit
+runlevel 
+sudo init 3
+Xvfb
+jobs
+bg
+jobs
+firefox
+jobs
+kill
+kill %1
+jobs
+echo $DISPLAY
+DISPLAY=:1
+echo $DISPLAY
+Xvfb-run
+xvfb-run
+export DISPLAY
+Xvfb :1 -screen 0 1024x768x24 &
+jobs
+_XSERVtransmkdir: Owner of /tmp/.X11-unix should be set to root
+firefox &
+jobs
+kill $(jobs -p)
+jobs
+ls
+sudo find / -name '*XSERV*'
+sudo init 5
+cd /etc/
+ls
+cd xdg/autostart/
+ls
+sudo mv firefox.desktop ~
+cd
+ls
+mv firefox.desktop Documents/
+ls
+firefox -p
+cd python/
+ls
+chmod +x selenium_main.py
+./selenium_main.py 
+sudo pip install numpy
+pip3 install numpy
+pip
+pip2 install numpy
+python3 -m pip
+python3 -m pip install numpy
+pip list
+sudo pip
+sudo pip list
+sudo pip uninstall matplotlib 
+sudo pip list
+sudo pip uninstall selenium 
+sudo pip list
+sudo pip uninstall pandas 
+sudo pip uninstall numpy 
+sudo pip list
+sudo python3 -m pip install selenium
+sudo python3 -m pip install numpy
+printf '\a'
+sudo python3 -m pip install pandas; printf '\a\a\a\a\a\a\a'
+sudo python3 -m pip install matplotlib && printf '\a\a\a\a\a\a\a\a'
+./selenium_main.py 
+vi ~/.bashrc
+. ~/.bashrc
+jobs
+ps u
+ps u | grep selenium
+cd python/
+ls
+vi xvfb.sh 
+less err.log 
+less out.log 
+emacs selenium_main.py
+bg
+cd
+cd .mozilla/firefox/ygljf7v2.selenium/
+pwd
+cd
+cd python/
+ls
+chmod +x selenium_main.py
+./selenium_main.py 
+./xvfb.sh 
+bg
+ps
+fc -l 100
+xwd -secreen :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+xwd -screen :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+sudo xset dpms force off
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+ps
+less err.log 
+vi xvfb.sh 
+./xvfb.sh 
+bg
+ps
+sudo xset dpms force off
+./xvfb.sh 
+ps
+fg
+jobs
+kill %2
+ps
+jobs
+cd python/
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+sudo xset dpms force off
+ls /mnt
+nautilus
+sudo xset dpms force off
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+sudo xset dpms force off
+xwd -display :1 -root | xwdtopnm | pnmtopng > a.png; eog a.png
+ps
+ps u
+nautilus
+sudo xset dpms force off
+cd python/
+ls
+./xvfb.sh 
+chmod +x selenium_main.py
+./xvfb.sh 
+kill %1
+chmod +x sele_test.py 
+ls
+emacs sele_test.py 
+./sele_test.py
+shutdown
+sudo dnf upgrade
+df
+sudo dnf autoremove 
+sudo dnf upgrade
+df -h
+sync
+df -h
+ls /boot -l
+ls /boot -h
+ls /boot -hl
+su
