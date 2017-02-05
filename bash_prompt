@@ -1,0 +1,126 @@
+#!/bin/sh
+
+trap 'printf "\e[0m"' DEBUG
+
+echo_cat() {
+    local ret
+    for tmp in $*
+    do
+	ret+=$tmp
+    done
+    echo -n $ret
+}
+
+# PROMPT_COMMAND='pc=$?; wd=$(pwd | wc -m); printf "\e[s\e[1;$(expr $COLUMNS - ${wd} + 1)f$(for n in $(seq 1 ${wd});do printf " ";done)\e[${wd}D\e[1m$(pwd)\e[0m\n\e[$(expr $COLUMNS - 11)C$(LANG=en_US.UTF-8 date +"%a %b %d")\n\e[$(expr $COLUMNS - 6)C$(TZ="Asia/Tokyo" date +"%H:%M")\e[u"; wd=$(pwd | wc -m)'
+
+PROMPT_COMMAND=$(echo -n \
+	'printf "\e[?25l";' \ # hides the cursor.
+	'pc=$?;' \
+	'WD_COL_NUM=$(PWD | wc -m);' \ # working directory columns number.
+	'printf' \
+	$(IFS=$'\n'; echo_cat $(for i in \
+		"'" \
+		'\e[s' \ # s == save cursor position.
+		'\e[1;$(expr $COLUMNS - ${WD_COL_NUM} + 1)f' \ # n;m f == n;m H ==horizontal and vertical position. 
+		'$(for n in $(seq 1 ${WD_COL_NUM});' \ # over write by whitespaces.
+		'do ' \
+			'echo -n " ";' \
+		'done)' \
+		'\e[${WD_COL_NUM}D' \ # D == cursor back.
+		'\e[1m$(PWD)\e[0m\n' \
+		'\e[$(expr $COLUMNS - 11)C' \ # C == cursor forward.
+		'$(LANG=en_US.UTF-8 date +"%a %b %d")\n' \
+		'\e[$(expr $COLUMNS - 6)C' \
+		'$(TZ="Asia/Tokyo" date +"%H:%M")' \
+		'\e[u' \ # u == restore cursor position.
+		"'" \
+		';'
+		do
+			echo $i
+		done
+	)) \
+	'printf "\e[25h"' \ # shows the cursor.
+)
+
+PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;34m\]\$ \[\e[38;5;248m\]'
+PS2='>>'
+
+colors() {
+    local fgc bgc vals seq0
+
+    printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+    printf "Values 30..37 are \e[33mforeground colors\e[m\n"
+    printf "Values 40..47 are \e[43mbackground colors\e[m\n"
+    printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
+
+    # foreground colors
+    for fgc in {30..37}; do
+	# background colors
+	for bgc in {40..47}; do
+	    fgc=${fgc#37} # white
+	    bgc=${bgc#40} # black
+
+	    vals="${fgc:+$fgc;}${bgc}"
+	    vals=${vals%%;}
+
+	    seq0="${vals:+\e[${vals}m}"
+	    printf "  %-9s" "${seq0:-(default)}"
+	    printf " ${seq0}TEXT\e[m"
+	    printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
+	done
+	echo; echo
+    done
+}
+
+colors256() {
+  local i j k
+  printf "\n"
+  for i in {0..27}
+  do
+      printf " "
+  done
+  printf "\033[1m\\\033[38;5;\033[4m%%d\033[0;1mm"
+  printf "\033[G"
+  printf "\033[%dC" $((3+16*4+2))
+  for i in {0..27}
+  do
+      printf " "
+  done
+  printf "\\\033[48;5;\033[4m%%d\033[0;1mm\n\n\033[0m"
+  
+  printf "   "
+  for i in {0..15}
+  do
+    printf " %X  " $i      
+  done
+  printf "     "
+  for i in {0..15}
+  do
+    printf " %X  " $i      
+  done
+  printf "\n"
+
+  for i in {0..15}
+  do
+      printf " %X " $i
+
+      for j in {0..15}
+      do
+	  k=$(($i*16+$j))
+	  printf "\033[38;5;%dm%03d " $k $k
+      done
+      printf "  "
+
+      printf " \033[0m%X " $i
+      for j in {0..15}
+      do
+	  k=$(($i*16+$j))
+	  printf "\033[48;5;%dm%03d" $k $k
+	  printf "\033[0m "
+      done
+      printf "\n\n"
+
+  done
+  
+  printf "\033[0m "
+}
