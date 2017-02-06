@@ -13,37 +13,156 @@ echo_cat() {
 
 # PROMPT_COMMAND='pc=$?; wd=$(pwd | wc -m); printf "\e[s\e[1;$(expr $COLUMNS - ${wd} + 1)f$(for n in $(seq 1 ${wd});do printf " ";done)\e[${wd}D\e[1m$(pwd)\e[0m\n\e[$(expr $COLUMNS - 11)C$(LANG=en_US.UTF-8 date +"%a %b %d")\n\e[$(expr $COLUMNS - 6)C$(TZ="Asia/Tokyo" date +"%H:%M")\e[u"; wd=$(pwd | wc -m)'
 
+# "\e[?25l" => hides the cursor.
+# 'WD_COL_NUM=$(PWD | wc =m);' => working directory columns number.
+# '\e[s' => save cursor position.
+# '\e[<n>;<m>f' => horizontal and vertical position. == <n>;<m>H
+# '\e[<n>D' => cursor back.
+# '\e[<n>C' => cursor forward.
+# '\e[u' => restore cursor position.
+# "\e[25h" => shows the cursor.
+
 PROMPT_COMMAND=$(echo -n \
-	'printf "\e[?25l";' \ # hides the cursor.
+	'printf "\033[?25l";' \
 	'pc=$?;' \
-	'WD_COL_NUM=$(PWD | wc -m);' \ # working directory columns number.
+	'WD_COL_NUM=$(pwd | wc -m);' \
 	'printf' \
 	$(IFS=$'\n'; echo_cat $(for i in \
-		"'" \
-		'\e[s' \ # s == save cursor position.
-		'\e[1;$(expr $COLUMNS - ${WD_COL_NUM} + 1)f' \ # n;m f == n;m H ==horizontal and vertical position. 
-		'$(for n in $(seq 1 ${WD_COL_NUM});' \ # over write by whitespaces.
+		'"' \
+		'\033[s' \
+		'\033[1;$(($COLUMNS-${WD_COL_NUM}+1))f' \
+		'$(for n in $(seq 1 ${WD_COL_NUM});' \
 		'do ' \
-			'echo -n " ";' \
+			'echo -n '"'"' '"'"';' \
 		'done)' \
-		'\e[${WD_COL_NUM}D' \ # D == cursor back.
-		'\e[1m$(PWD)\e[0m\n' \
-		'\e[$(expr $COLUMNS - 11)C' \ # C == cursor forward.
-		'$(LANG=en_US.UTF-8 date +"%a %b %d")\n' \
-		'\e[$(expr $COLUMNS - 6)C' \
-		'$(TZ="Asia/Tokyo" date +"%H:%M")' \
-		'\e[u' \ # u == restore cursor position.
-		"'" \
+		'\033[${WD_COL_NUM}D' \
+		'\033[1m${PWD}\e[0m\n' \
+		'\033[$(($COLUMNS-11))C' \
+		'$(LANG=en_US.UTF-8 date +'"'"'%a %b %d'"'"')\n' \
+		'\033[$(($COLUMNS-6))C' \
+		'$(TZ=Asia/Tokyo date +'"'"'%H:%M'"'"')' \
+		'\033[u' \
+		'"' \
 		';'
 		do
 			echo $i
 		done
 	)) \
-	'printf "\e[25h"' \ # shows the cursor.
+	'printf "\033[?25h"' \
 )
 
 PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;34m\]\$ \[\e[38;5;248m\]'
 PS2='>>'
+
+flasher() {
+    while true
+    do
+	printf "\e[?5h"
+	sleep 0.1
+	printf "\e[?5l"
+	read -s -n1 -t1 && break
+    done
+}
+
+colors_all() {
+    local h i j k t w LorS
+    SorL=$(( $COLUMNS < 144 ))
+    echo; echo
+
+    t='SGR (Select Graphic Rendition) parameters'
+    w=$(echo -n "$t" | wc -m)
+    printf "\033[%dC" $(( ((140-$SorL*70)-$w)/2 ))
+    printf "\033[1m"; echo $t; echo; printf "\033[0m"    
+
+    for i in 0 5
+    do
+	for j in {0..4}
+	do
+	    k=$(( $j + $i ))
+    	    printf "\033[%dm%14d" $k $k
+    	    printf "\033[0m"
+	done
+	[ $SorL == 1 ] && [ $i == 0 ] && echo
+    done
+    echo
+    for h in 0 10
+    for i in {0..4}
+    do
+	for j in {0..9}
+	do
+	    k=$(( $j + $i*20 + 10))
+	    #printf "%7s" ""
+	    printf "\033[%dm%7d" $k $k
+	    printf "\033[0m"
+	done
+	echo
+    done
+    echo; echo
+    
+    t='256-color mode'
+    w=$(echo -n $t | wc -m)
+    printf "\033[%dC" $(( (144-$w)/2 ))
+    printf "\033[1m"; echo $t;
+
+    t='foreground: ESC[38;5;#m  background: ESC[48;5;#m'
+    w=$(echo -n "$t" | wc -m)
+    printf "\033[%dC" $(( (144-$w)/2 ))
+    echo "$t"; echo; printf "\033[0m"
+
+    t='Standard colors'
+    w=$(echo -n $t | wc -m)
+    printf "\033[%dC" $(( (72-$w)/2 ))
+    echo -n $t; printf "\033[%dC" $(( 72 - (72-$w)/2 - $w ))
+    t='High-intensity colors'
+    w=$(echo -n $t | wc -m)
+    printf "\033[%dC" $(( (72-$w)/2 ))
+    echo $t
+    for i in 0 8
+    do
+	[[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
+	for j in {0..7}
+	do
+	    k=$(( $i + $j ))
+	    printf "\033[48;5;%dm%9d" $k $k
+	done
+    done
+    printf "\033[0m\n"
+
+    t='216 colors'
+    w=$(echo -n $t | wc -m)
+    printf "\033[%dC" $(( (144-$w)/2 ))
+    echo $t
+    for h in {0..5}
+    do
+	for i in 0 18
+	do
+	    [[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
+	    for j in {0..17}
+	    do
+		k=$(( $i + $j + 36*$h + 16 ))
+		printf "\033[48;5;%dm%4d" $k $k
+	    done
+	done
+	printf "\033[0m\n"
+    done
+
+    t='Grayscale colors'
+    w=$(echo -n $t | wc -m)
+    printf "\033[%dC" $(( (144-$w)/2 ))
+    echo $t
+    for i in 0 12
+    do
+	[[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
+	for j in {0..11}
+	do
+	    k=$(( $i + $j + 232 ))
+	    printf "\033[48;5;%dm%6d" $k $k
+	done
+    done
+    printf "\033[0m\n"
+
+    echo; echo
+}
 
 colors() {
     local fgc bgc vals seq0
