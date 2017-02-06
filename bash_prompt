@@ -76,88 +76,126 @@ colors_all() {
 
     for i in 0 5
     do
-	for j in {0..4}
-	do
-	    k=$(( $j + $i ))
+	    for j in {0..4}
+	    do
+	        k=$(( $j + $i ))
     	    printf "\033[%dm%14d" $k $k
     	    printf "\033[0m"
-	done
-	[ $SorL == 1 ] && [ $i == 0 ] && echo
+	    done
+	    [ $SorL == 1 ] && [ $i == 0 ] && echo
     done
     echo
-    for h in 0 10
-    for i in {0..4}
+    for h in {0..4}
     do
-	for j in {0..9}
-	do
-	    k=$(( $j + $i*20 + 10))
-	    #printf "%7s" ""
-	    printf "\033[%dm%7d" $k $k
-	    printf "\033[0m"
-	done
-	echo
+             for i in 0 10
+             do
+	             for j in {0..9}
+	             do
+	                 k=$(( $i + $j + 10 + h*20))
+	                 #printf "%7s" ""
+	                 printf "\033[%dm%7d" $k $k
+	                 printf "\033[0m"
+	             done
+	             [ $SorL == 1 ] && [ $i == 0 ] && echo
+             done
+             echo
     done
     echo; echo
     
     t='256-color mode'
     w=$(echo -n $t | wc -m)
-    printf "\033[%dC" $(( (144-$w)/2 ))
+    printf "\033[%dC" $(( ((144-$SorL*72)-$w)/2 ))
     printf "\033[1m"; echo $t;
-
     t='foreground: ESC[38;5;#m  background: ESC[48;5;#m'
     w=$(echo -n "$t" | wc -m)
-    printf "\033[%dC" $(( (144-$w)/2 ))
+    printf "\033[%dC" $(( ((144-$SorL*72)-$w)/2 ))
     echo "$t"; echo; printf "\033[0m"
 
     t='Standard colors'
     w=$(echo -n $t | wc -m)
-    printf "\033[%dC" $(( (72-$w)/2 ))
-    echo -n $t; printf "\033[%dC" $(( 72 - (72-$w)/2 - $w ))
-    t='High-intensity colors'
-    w=$(echo -n $t | wc -m)
-    printf "\033[%dC" $(( (72-$w)/2 ))
-    echo $t
-    for i in 0 8
-    do
+    printf "\033[%dC" $(( ((72-$SorL*36)*(1+$SorL)-$w)/2 ))
+    echo -n $t; printf "\033[%dC" $(( (72-$SorL*36)*(1+$SorL) - ((72-$SorL*36)*(1+$SorL)-$w)/2 - $w ))
+    echo
+    i=0
 	[[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
 	for j in {0..7}
 	do
 	    k=$(( $i + $j ))
 	    printf "\033[48;5;%dm%9d" $k $k
 	done
-    done
-    printf "\033[0m\n"
+    printf "\033[0m"
+            if [ $SorL == 1 ]; then
+                echo
+            else
+                printf "\033[s"
+                printf "\033[A"
+            fi
+            t='High-intensity colors'
+            w=$(echo -n $t | wc -m)
+            printf "\033[%dC" $(( ((72-$SorL*36)*(1+$SorL)-$w)/2 ))
+            echo -n $t
+            if [ $SorL == 1 ]; then
+                echo
+            else
+                printf "\033[u"
+            fi
+            i=8
+            [[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
+	        for j in {0..7}
+	        do
+	            k=$(( $i + $j ))
+	            printf "\033[48;5;%dm%9d" $k $k
+	        done
+            printf "\033[0m\n"
 
     t='216 colors'
     w=$(echo -n $t | wc -m)
-    printf "\033[%dC" $(( (144-$w)/2 ))
+    printf "\033[%dC" $(( ((144-$SorL*72)-$w)/2 ))
     echo $t
     for h in {0..5}
     do
-	for i in 0 18
-	do
+        i=0
 	    [[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
 	    for j in {0..17}
 	    do
-		k=$(( $i + $j + 36*$h + 16 ))
-		printf "\033[48;5;%dm%4d" $k $k
+		    k=$(( $i + $j + 36*$h + 16 ))
+		    printf "\033[48;5;%dm%4d" $k $k
 	    done
-	done
-	printf "\033[0m\n"
+	    printf "\033[0m"
+        [ $h != 5 ] && printf "\n"
     done
-
+            if [ $SorL == 1 ]; then
+                echo; echo; echo; echo; echo; echo
+            fi
+            printf "\033[5A"
+            for h in {0..5}
+            do
+                i=18
+	            [[ $i != 0 ]] && printf "\033[30m" ||  printf "\033[1m"
+                printf "\033[s"
+	            for j in {0..17}
+	            do
+		            k=$(( $i + $j + 36*$h + 16 ))
+		            printf "\033[48;5;%dm%4d" $k $k
+	            done
+	            printf "\033[u\033[B"
+            done
+            printf "\033[G\033[0m"
+            echo
+            
     t='Grayscale colors'
-    w=$(echo -n $t | wc -m)
-    printf "\033[%dC" $(( (144-$w)/2 ))
-    echo $t
+    w=$(echo -n "$t" | wc -m)
+    printf "\033[%dC" $(( ((144-$SorL*72)-$w)/2 ))
+    echo "$t"
     for i in 0 12
     do
-	[[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
-	for j in {0..11}
-	do
-	    k=$(( $i + $j + 232 ))
-	    printf "\033[48;5;%dm%6d" $k $k
-	done
+	    [[ $i != 0 ]] && printf "\033[0m" && printf "\033[30m" ||  printf "\033[1m"
+	    for j in {0..11}
+	    do
+	        k=$(( $i + $j + 232 ))
+	        printf "\033[48;5;%dm%6d" $k $k
+	    done
+        [ $SorL == 1 ] && [ $i == 0 ] && echo -e "\e[0m"
     done
     printf "\033[0m\n"
 
