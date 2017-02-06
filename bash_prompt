@@ -3,6 +3,7 @@
 trap 'printf "\e[0m"' DEBUG
 
 # PROMPT_COMMAND='pc=$?; wd=$(pwd | wc -m); printf "\e[s\e[1;$(expr $COLUMNS - ${wd} + 1)f$(for n in $(seq 1 ${wd});do printf " ";done)\e[${wd}D\e[1m$(pwd)\e[0m\n\e[$(expr $COLUMNS - 11)C$(LANG=en_US.UTF-8 date +"%a %b %d")\n\e[$(expr $COLUMNS - 6)C$(TZ="Asia/Tokyo" date +"%H:%M")\e[u"; wd=$(pwd | wc -m)'
+# PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$ \[\e[38;5;248m\]'
 
 # "\e[?25l" => hides the cursor.
 # 'WD_COL_NUM=$(PWD | wc =m);' => working directory columns number.
@@ -22,26 +23,27 @@ echo_cat() {
     echo -n $ret
 }
 
-export pc
+export pc=$?
+export pd=$(echo -n $PWD | wc -m)
 
 PROMPT_COMMAND=$(echo -n \
 	'pc=$?;' \
 	'printf "\033[?25l";' \
-	'WD_COL_NUM=$(pwd | wc -m);' \
+	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
 	'printf' \
 	$(IFS=$'\n'; echo_cat $(for i in \
 		'"' \
 		'\033[s' \
-		'\033[1;$(($COLUMNS-${WD_COL_NUM}+1))f' \
-		'$(for n in $(seq 1 ${WD_COL_NUM});' \
+		'\033[1;$(( $COLUMNS - ${pd} +1 ))f' \
+		'$(for n in $(seq 1 ${pd});' \
 		'do ' \
-			'echo -n '"'"' '"'"';' \
+			'printf '"' '"';' \
 		'done)' \
-		'\033[${WD_COL_NUM}D' \
+		'\e[$(( ${WD_COL_NUM} -1 ))D' \
 		'\033[1m${PWD}\e[0m\n' \
-		'\033[$(($COLUMNS-11))C' \
+		'\033[$(( $COLUMNS - 10 ))C' \
 		'$(LANG=en_US.UTF-8 date +'"'"'%a %b %d'"'"')\n' \
-		'\033[$(($COLUMNS-6))C' \
+		'\033[$(( $COLUMNS - 5 ))C' \
 		'$(TZ=Asia/Tokyo date +'"'"'%H:%M'"'"')' \
 		'\033[u' \
 		'"' \
@@ -50,10 +52,19 @@ PROMPT_COMMAND=$(echo -n \
 			echo $i
 		done
 	)) \
-	'printf "\033[?25h"' \
+	'printf "\033[?25h";' \
+	'pd=$(echo -n $PWD | wc -m)'
 )
 
-PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$ \[\e[38;5;248m\]'
+PS1=$(echo -n \
+   '\[\e[0m\]$pc' \
+   '$SHLVL' \
+   '\[\e[0;$(if [ $pc -eq 0 ]; then echo "32m\];)"; else echo "31m\]:("; fi)' \
+   '\[\e[38;5;248m\]\W' \
+   '\[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$' \
+   '\[\e[38;5;248m\]' \
+)
+
 PS2='>> '
 
 flasher() {
