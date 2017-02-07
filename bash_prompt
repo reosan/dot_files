@@ -23,8 +23,8 @@ echo_cat() {
     echo -n $ret
 }
 
-export pc=$?
-export pd=$(echo -n $PWD | wc -m)
+pc=$?
+pd=$(echo -n $PWD | wc -m)
 
 PROMPT_COMMAND=$(echo -n \
 	'pc=$?;' \
