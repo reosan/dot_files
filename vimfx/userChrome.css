@@ -40,3 +40,51 @@
 #urlbar {
   ime-mode: inactive;
 }
+
+statuspanel label.statuspanel-label {
+  background: linear-gradient(45deg, rgba(22, 22, 22, 0.9), rgba(99, 99, 99, 0.9)) !important;
+  color: whitesmoke !important;
+  font-size: 14px !important;
+}
+
+/* statuspanel > hbox.statuspanel-inner > label.statuspanel-label { */
+/* 	background: linear-gradient(45deg, rgba(22, 22, 22, 0.9), rgba(99, 99, 99, 0.9)) !important; */
+/* 	border-right: 1px solid whitesmoke !important; */
+/* 	border-top: 1px solid whitesmoke !important; */
+/* 	border-top-right-radius: 4px !important; */
+/* 	color: whitesmoke !important; */
+/* 	font-family: Verdana, メイリオ !important; */
+/* 	font-size: 14px !important; */
+/* 	line-height: 0 !important; */
+/* 	margin: 0 !important; */
+/* 	padding: 4px !important; */
+/* } */
+
+/* statuspanel > hbox.statuspanel-inner > label.statuspanel-label[mirror="true"] { */
+/* 	background: linear-gradient(315deg, rgba(22, 22, 22, 0.9), rgba(99, 99, 99, 0.9)) !important; */
+/* 	border-left: 1px solid whitesmoke !important; */
+/* 	border-right: 0 !important; */
+/* 	border-top-left-radius: 4px !important; */
+/* 	border-top-right-radius: 0 !important; */
+/* } */
+
+/* あくまでもカスタマイズの一例。フォントとか色とかはお好みで。 */
+/* （Macの人は「Verdana, メイリオ」部分を「"ヒラギノ角ゴ ProN W3"」に変更） */
+
+/* titleツールチップ */
+
+/* title属性のある要素にマウスオーバーした時に出てくる */
+/* ツールチップのスタイルを弄りたい場合、 */
+/* tooltipという要素に対して指定する。 */
+
+/* tooltip { */
+/* 	background: linear-gradient(rgba(33, 33, 33, 0.9), rgba(77, 77, 77, 1), rgba(33, 33, 33, 0.9)) !important; */
+/* 	border: 2px solid black !important; */
+/* 	border-radius: 4px !important; */
+/* 	color: whitesmoke !important; */
+/* 	font-family: Verdana, メイリオ !important; */
+/* 	font-size: 12px !important; */
+/* 	padding: 4px !important; */
+/* 	-moz-appearance: none !important; */
+/* } */
+

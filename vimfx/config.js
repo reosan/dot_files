@@ -13,6 +13,39 @@ let {
     READ_LINE,
 } = Cu.import(`${__dirname}/shared.js`, {});
 
+vimfx.on('modeChange', ({vim}) => {
+  let mode = vimfx.modes[vim.mode].name
+  vim.notify(`Entering mode: ${mode}`) // 通知
+})
+
+let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {});
+Preferences.set({
+    'browser.urlbar.maxRichResults': 10,
+    'dom.popup_allowed_events': '',
+    // 'dom.popup_maximum': 20,
+    // 'dom.ipc.processCount': 1,
+
+    //     'accessibility.typeaheadfind.enablesound': false,
+    //     'devtools.chrome.enabled': true,
+    //     'privacy.donottrackheader.enabled': true,
+    //     'toolkit.scrollbox.verticalScrollDistance': 1,
+});
+
+const CUSTOM_COMMANDS = [
+    [{	name: 'pocket',
+	description: 'Save to Pocket',
+	category: 'misc',
+     },{	 key: ',s',
+		 func: ({vim}) => { vim.window.document.getElementById('pocket-button').click(); },
+       }],
+    [{	name: 'open_about_config',
+	description: 'open about:config',
+	category: 'misc',
+     },{	 key: ',c',
+		 func: ({vim}) => { vim.window.open('about:config'); },
+       }],
+];
+
 const SHORTCUTS = [
     // shortcuts =
     //   'normal':
@@ -217,8 +250,6 @@ const OPTIONS = [
     //   'translations': {}
     //   'categories':   {} # Will be filled in below.
 
-
-
     // # The above easy-to-read data is transformed in to easy-to-consume (for
     // # computers) formats below.
 
@@ -275,43 +306,60 @@ const OPTIONS = [
     // }
 ];
 
-vimfx.on('modeChange', ({vim}) => {
-  let mode = vimfx.modes[vim.mode].name
-  vim.notify(`Entering mode: ${mode}`) // 通知
-})
+let categories = vimfx.get('categories');
+categories.insert = {
+    name: '.inputrc',
+    order: categories.misc.order - 1,
+};
 
-let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {});
-Preferences.set({
-    'browser.urlbar.maxRichResults': 20,
-    'dom.popup_allowed_events': '',
-    // 'dom.popup_maximum': 20,
-    // 'dom.ipc.processCount': 1,
+let readLineBinding = (opts) => {
+    opts.category = 'insert';
+    vimfx.addCommand(
+        opts,
+        ({vim}) => {
+            let cb = readLineCallbacks[opts.name];
+            let data_cb = readLineDataCallbacks[opts.name];
+            let data = data_cb ? data_cb(vim) : null;
+            let active = vim.window.document.activeElement;
+            if (active && isEditableInput(active)) {
+                cb(active, data);
+            }
+            else {
+                vimfx.send(vim, opts.name, data, null);
+            }
+        }
+    );
+};
 
-    //     'accessibility.typeaheadfind.enablesound': false,
-    //     'devtools.chrome.enabled': true,
-    //     'privacy.donottrackheader.enabled': true,
-    //     'toolkit.scrollbox.verticalScrollDistance': 1,
+READ_LINE.forEach(a => {
+    ((name, key) => {
+	readLineBinding({
+	    name: name,
+	    description: name.replace(/_/g, '-'),
+	});
+	vimfx.set(`custom.mode.normal.${name}`, `<force>${key}`);
+    })(a[0], a[1]);
 });
 
-const CUSTOM_COMMANDS = [
-    [{	name: 'pocket',
-	description: 'Save to Pocket',
-	category: 'misc',
-     },{	 key: ',s',
-		 func: ({vim}) => { vim.window.document.getElementById('pocket-button').click(); },
-       }],
-    [{	name: 'open_about_config',
-	description: 'open about:config',
-	category: 'misc',
-     },{	 key: ',c',
-		 func: ({vim}) => { vim.window.open('about:config'); },
-       }],
-];
+SHORTCUTS.forEach(a => {
+    ((name, key) => {
+	vimfx.set(`mode.normal.${name}`, key);
+    })(a[0], a[1]);
+});
+
+OPTIONS.forEach(a => {
+    ((name, key) => {
+	vimfx.set(name, key);
+    })(a[0], a[1]);
+});
 
 CUSTOM_COMMANDS.forEach(a => {
     vimfx.addCommand(a[0],a[1]['func']);
     vimfx.set(`custom.mode.normal.${a[0]['name']}`, a[1]['key']);
 });
+
+
+
 // vimfx.addCommand({
 //     name: 'pocket',
 //     description: 'Save to Pocket',
@@ -327,9 +375,6 @@ CUSTOM_COMMANDS.forEach(a => {
 //     vim.window.open('about:config');
 // });
 // vimfx.set('custom.mode.normal.open_about_config', ',c');
-
-
-
 
 // vimfx.set('mode.normal.focus_search_bar', '');
 // vimfx.set('mode.normal.copy_current_url', 'y');
@@ -411,51 +456,111 @@ CUSTOM_COMMANDS.forEach(a => {
 // });
 // vimfx.set('custom.mode.normal.focus_unhighlighted_location_bar', 'O');
 
-let categories = vimfx.get('categories');
-categories.insert = {
-    name: '.inputrc',
-    order: categories.misc.order - 1,
-};
-
-let readLineBinding = (opts) => {
-    opts.category = 'insert';
-    vimfx.addCommand(
-        opts,
-        ({vim}) => {
-            let cb = readLineCallbacks[opts.name];
-            let data_cb = readLineDataCallbacks[opts.name];
-            let data = data_cb ? data_cb(vim) : null;
-            let active = vim.window.document.activeElement;
-            if (active && isEditableInput(active)) {
-                cb(active, data);
-            }
-            else {
-                vimfx.send(vim, opts.name, data, null);
-            }
-        }
-    );
-};
 
 
-READ_LINE.forEach(a => {
-    ((name, key) => {
-	readLineBinding({
-	    name: name,
-	    description: name.replace(/_/g, '-'),
-	});
-	vimfx.set(`custom.mode.normal.${name}`, `<force>${key}`);
-    })(a[0], a[1]);
-});
-
-SHORTCUTS.forEach(a => {
-    ((name, key) => {
-	vimfx.set(`mode.normal.${name}`, key);
-    })(a[0], a[1]);
-});
-
-OPTIONS.forEach(a => {
-    ((name, key) => {
-	vimfx.set(name, key);
-    })(a[0], a[1]);
-});
-
+// // config - based on
+// const {classes: Cc, interfaces: Ci, utils: Cu} = Components
+// Cu.import("resource://gre/modules/XPCOMUtils.jsm")
+// XPCOMUtils.defineLazyModuleGetter(this, "Preferences", "resource://gre/modules/Preferences.jsm")
+// const gClipboardHelper = Cc["@mozilla.org/widget/clipboardhelper;1"].getService(Ci.nsIClipboardHelper);
+// // override default settings
+// Preferences.set({
+//     "devtools.chrome.enabled" : true,
+//     "browser.urlbar.filter.javascript" : false,           // bookmarklet を使うのに必要
+//     "findbar.modalHighlight": false,
+//     "findbar.highlightAll": false,
+// });
+// // helper functions
+// let {commands} = vimfx.modes.normal
+// let set = (pref, valueOrFunction) => {
+//     let value = typeof valueOrFunction === "function"
+//         ? valueOrFunction(vimfx.getDefault(pref))
+//         : valueOrFunction
+//     vimfx.set(pref, value)
+// }
+// let map = (shortcuts, command, custom=false) => {
+//     vimfx.set(`${custom ? "custom." : ""}mode.normal.${command}`, shortcuts)
+// }
+// // options
+// set("prevent_autofocus", true)
+// set("mode.normal.copy_current_url", "y");
+// // custom command
+// vimfx.addCommand({
+//     name: "goto_addons",
+//     description: "Addons",
+// }, ({vim}) => {
+//     vim.window.BrowserOpenAddonsMgr()
+// })
+// map(",a", "goto_addons", true)
+// //
+// vimfx.addCommand({
+//     name: "goto_preferences",
+//     description: "Preferences",
+// }, ({vim}) => {
+//     vim.window.openPreferences()
+// })
+// map(",p", "goto_preferences", true)
+// //
+// vimfx.addCommand({
+//     name: "goto_downloads",
+//     description: "Downloads",
+// }, ({vim}) => {
+//     vim.window.DownloadsPanel.showDownloadsHistory()
+// })
+// map(",d", "goto_downloads", true)
+// //
+// vimfx.addCommand({
+//     name: "goto_config",
+//     description: "Config",
+// }, ({vim}) => {
+//     vim.window.switchToTabHavingURI("about:config", true)
+// })
+// map(",c", "goto_config", true)
+// //
+// vimfx.addCommand({
+//     name: "search_bookmarks",
+//     description: "Search bookmarks",
+//     order: commands.focus_location_bar.order + 1,
+// }, (args) => {
+//     let {vim} = args
+//     let {gURLBar} = vim.window
+//     gURLBar.value = ""
+//     commands.focus_location_bar.run(args)
+//     gURLBar.value = "* "
+//     gURLBar.onInput(new vim.window.KeyboardEvent("input"))
+// })
+// map("b", "search_bookmarks", true)
+// //
+// vimfx.addCommand({
+//     name: "copy_org",
+//     description: ""[[URL][title]]"でURLコピー",
+//     category: "location",
+// }, ({vim}) => {
+//     let url = vim.window.gBrowser.selectedBrowser.currentURI.spec
+//     let title = vim.window.gBrowser.selectedBrowser.contentTitle
+//     let fmt = "[["+url+"]["+title+"]]"
+//     gClipboardHelper.copyString(fmt)
+//     vim.notify("Copied String: "+ fmt)
+// })
+// map("co", "copy_org", true)
+// //
+// vimfx.addCommand({
+//     name: "copy_rd",
+//     description: ""((<"title"|URL:URL>))"でURLコピー",
+//     category: "location",
+// }, ({vim}) => {
+//     let url = vim.window.gBrowser.selectedBrowser.currentURI.spec
+//     let title = vim.window.gBrowser.selectedBrowser.contentTitle
+//     let fmt = "((<\""+title+"\"|URL:"+url+">))"
+//     gClipboardHelper.copyString(fmt)
+//     vim.notify("Copied String: "+ fmt)
+// })
+// map("cr", "copy_rd", true)
+// //
+// vimfx.addCommand({
+//     name: "foxyproxy_click_toolbar_button",
+//     description: "FoxyProxy",
+// }, ({vim}) => {
+//     vim.window.document.getElementById("foxyproxy-toolbar-icon").click()
+// })
+// map(".p", "foxyproxy_click_toolbar_button", true)
