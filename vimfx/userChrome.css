@@ -1,0 +1,42 @@
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+
+/* Warning: This might slow hint generation down!
+#VimFxMarkersContainer .marker {
+  padding: 1px 2px 0 2px !important;
+  background-color: #FFD76E !important;
+  border: solid 1px #AD810C !important;
+  border-radius: 2px !important;
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.3) !important;
+  font-size: 12px !important;
+  color: #302505 !important;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", "Sans" !important;
+  font-weight: bold !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+  opacity: 0.8 !important;
+  text-transform: lowercase !important;
+}
+*/
+
+#VimFxMarkersContainer .marker {
+  font-size: 16px !important;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", "Sans" !important;
+  font-weight: bold !important;
+  padding: 1px 2px 0 2px !important;
+}
+
+#VimFxMarkersContainer .marker--matched,
+#VimFxMarkersContainer .marker-char--matched {
+  color: #FFA22A !important;
+}
+#VimFxMarkersContainer .marker--highlighted {
+  background-color: #FFD76E !important;
+}
+
+/* Making the location bar red when in Ignore mode (you may substitute “ignore” with any mode name below): */
+#main-window[vimfx-mode="ignore"] #urlbar {
+    background: red !important;
+}
+/* ime off on URL-bar */
+#urlbar {
+  ime-mode: inactive;
+}

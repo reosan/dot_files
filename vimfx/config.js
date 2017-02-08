@@ -13,7 +13,7 @@ let {
     READ_LINE,
 } = Cu.import(`${__dirname}/shared.js`, {});
 
-const NORMAL = [
+const SHORTCUTS = [
     // shortcuts =
     //   'normal':
     //     'location':
@@ -37,8 +37,8 @@ const NORMAL = [
 
     //     'scrolling':
     //       'h':         'scroll_left'
-    ['scroll_left', ''],
-    ['scroll_right', ''],
+    ['scroll_left', '<c-H>'],
+    ['scroll_right', '<c-L>'],
     //       'l':         'scroll_right'
     //       'j':         'scroll_down'
     //       'k':         'scroll_up'
@@ -156,9 +156,12 @@ const NORMAL = [
     //   'marks':
     //     '':
     //       '<escape> ':       'exit'
+];
 
+const OPTIONS = [
     // options =
     //   'prevent_autofocus':      false
+    ['prevent_autofocus', true],
     //   'ignore_keyboard_layout': false
     //   'blacklist':              '*example.com*  http://example.org/editor/*'
     //   'hints.chars':            'fjdkslaghrueiwonc mv'
@@ -272,6 +275,61 @@ const NORMAL = [
     // }
 ];
 
+vimfx.on('modeChange', ({vim}) => {
+  let mode = vimfx.modes[vim.mode].name
+  vim.notify(`Entering mode: ${mode}`) // 通知
+})
+
+let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {});
+Preferences.set({
+    'browser.urlbar.maxRichResults': 20,
+    'dom.popup_allowed_events': '',
+    // 'dom.popup_maximum': 20,
+    // 'dom.ipc.processCount': 1,
+
+    //     'accessibility.typeaheadfind.enablesound': false,
+    //     'devtools.chrome.enabled': true,
+    //     'privacy.donottrackheader.enabled': true,
+    //     'toolkit.scrollbox.verticalScrollDistance': 1,
+});
+
+const CUSTOM_COMMANDS = [
+    [{	name: 'pocket',
+	description: 'Save to Pocket',
+	category: 'misc',
+     },{	 key: ',s',
+		 func: ({vim}) => { vim.window.document.getElementById('pocket-button').click(); },
+       }],
+    [{	name: 'open_about_config',
+	description: 'open about:config',
+	category: 'misc',
+     },{	 key: ',c',
+		 func: ({vim}) => { vim.window.open('about:config'); },
+       }],
+];
+
+CUSTOM_COMMANDS.forEach(a => {
+    vimfx.addCommand(a[0],a[1]['func']);
+    vimfx.set(`custom.mode.normal.${a[0]['name']}`, a[1]['key']);
+});
+// vimfx.addCommand({
+//     name: 'pocket',
+//     description: 'Save to Pocket',
+// }, ({vim}) => {
+//     vim.window.document.getElementById('pocket-button').click();
+// });
+// vimfx.set('custom.mode.normal.pocket', 's');
+
+// vimfx.addCommand({
+//     name: 'open_about_config',
+//     description: 'open about:config',
+// }, ({vim}) => {
+//     vim.window.open('about:config');
+// });
+// vimfx.set('custom.mode.normal.open_about_config', ',c');
+
+
+
 
 // vimfx.set('mode.normal.focus_search_bar', '');
 // vimfx.set('mode.normal.copy_current_url', 'y');
@@ -342,14 +400,6 @@ const NORMAL = [
 // vimfx.set('custom.mode.normal.goto_tab', 'b');
 
 // vimfx.addCommand({
-//     name: 'pocket',
-//     description: 'Save to Pocket',
-// }, ({vim}) => {
-//     vim.window.document.getElementById('pocket-button').click();
-// });
-// vimfx.set('custom.mode.normal.pocket', 's');
-
-// vimfx.addCommand({
 //     name: 'focus_unhighlighted_location_bar',
 //     description: 'Focus the location bar with the URL unhighlighted',
 //     category: 'location',
@@ -391,22 +441,21 @@ READ_LINE.forEach(a => {
     ((name, key) => {
 	readLineBinding({
 	    name: name,
-	    description: name,
+	    description: name.replace(/_/g, '-'),
 	});
 	vimfx.set(`custom.mode.normal.${name}`, `<force>${key}`);
     })(a[0], a[1]);
 });
 
-NORMAL.forEach(a => {
+SHORTCUTS.forEach(a => {
     ((name, key) => {
 	vimfx.set(`mode.normal.${name}`, key);
     })(a[0], a[1]);
 });
 
-// let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {});
-// Preferences.set({
-//     'accessibility.typeaheadfind.enablesound': false,
-//     'devtools.chrome.enabled': true,
-//     'privacy.donottrackheader.enabled': true,
-//     'toolkit.scrollbox.verticalScrollDistance': 1,
-// });
+OPTIONS.forEach(a => {
+    ((name, key) => {
+	vimfx.set(name, key);
+    })(a[0], a[1]);
+});
+
