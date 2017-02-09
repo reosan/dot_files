@@ -11,6 +11,8 @@ const EXPORTED_SYMBOLS = [
 var READ_LINE = [
     ['forward_char', '<c-f>'],
     ['backward_char', '<c-b>'],
+    // ['next_history', '<c-n>'],
+    // ['previous_history', '<c-p>'],
     ['delete_char', '<c-d>'],
     ['backward_delete_char', '<c-h>'],
     ['kill_line', '<c-k>'],
@@ -27,6 +29,12 @@ var readLineCallbacks = {
     },
     'backward_char': (input, data) => {
 	backwardChar(input);
+    },
+    'next_history':(input, data) => {
+        nextHistory(input);
+    },
+    'previous_history': (input, data) => {
+        previousHistory(input);
     },
     'delete_char': (input, data) => {
 	deleteChar(input);
@@ -68,6 +76,14 @@ function forwardChar(e) {
 function backwardChar(e) {
     e.selectionStart = e.selectionEnd =
 	e.selectionStart == 0 ? 0 : e.selectionStart - 1;
+}
+
+function nextHistory(e) {
+    console.log('dummy');
+}
+
+function previousHistory(e) {
+    console.log('dummy');
 }
 
 function deleteChar(e) {

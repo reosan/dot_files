@@ -70,11 +70,13 @@ const SHORTCUTS = [
 
     //     'scrolling':
     //       'h':         'scroll_left'
+    //       'l':         'scroll_right'
     ['scroll_left', '<c-H>'],
     ['scroll_right', '<c-L>'],
-    //       'l':         'scroll_right'
     //       'j':         'scroll_down'
     //       'k':         'scroll_up'
+    ['scroll_down', 'j  <force><c-n>'],
+    ['scroll_up', 'k  <force><c-p>'],
     //       '<space>':   'scroll_page_down'
     //       '<s-space>': 'scroll_page_up'
     //       'd':         'scroll_half_page_down'
