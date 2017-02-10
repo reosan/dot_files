@@ -1,0 +1,6 @@
+alias ls="ls -F --color=always"
+alias shutdown="shutdown -P now"
+alias less="less -R"
+alias rm="rm -i"
+alias em="emacs -nw"
+

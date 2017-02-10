@@ -1,0 +1,38 @@
+octave &
+pwd
+ex2
+./music_randam.sh a ba c
+echo a b c | ./music_randam.sh 
+/bin/ls | ./music_randam.sh 
+/bin/ls | ./music_randam.sh 
+echo a b c | ./music_randam.sh 
+ls
+/bin/ls
+echo a b c
+echo a
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh 
+ls -1 | ./music_randam.sh a b c d
+ls -1 | ./music_randam.sh a b c d
+ls -1 | ./music_randam.sh a b c d
+ls -1 | ./music_randam.sh a b c d
+cd
+cd .mozilla/
+ls
+cd firefox/i1zq2uyh.selenium/
+pwd
+cd ..
+ls
+cd ufagd833.default/
+pwd
+/home/reosan/.mozilla/firefox/ufagd833.default
+cd ..
+ls
+cd i1zq2uyh.selenium/
+ls
+less key3.db 
+cat key3.db 
