@@ -1,7 +1,0 @@
-set number
-syntax enable
-set showmatch
-set autoindent
-set ignorecase
-set tabstop=2
-

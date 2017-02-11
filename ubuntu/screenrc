@@ -1,9 +1,0 @@
-# vi ~/.screenrc
-# Encoding
-defencoding utf-8
-
-# Prefix Key
-escape ^Tt
-
-# Delete start up screen
-startup_message off

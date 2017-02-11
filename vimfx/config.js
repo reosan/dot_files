@@ -6,6 +6,7 @@ const mm = Cc['@mozilla.org/globalmessagemanager;1']
 
 let {
     isEditableInput,
+    cleanTagName,
     // yank_,
     // unixLineDiscard,
     readLineCallbacks,
@@ -406,12 +407,15 @@ function helper_send_key(key, {vim, uiEvent}) {
 
 function url_send_key(key, {vim}) {
     var u = vim.window.document.activeElement;
-    ['keydown', 'keypress', 'keyup'].forEach(name => {
-        var event = new vim.window.KeyboardEvent(name, {
-            get keyCode(){return key == 'up' ? 40 : 38;},
+    //    if(isEditableInput(cleanTagName(u))){
+    if(true){
+        ['keydown', 'keypress', 'keyup'].forEach(name => {
+            var event = new vim.window.KeyboardEvent(name, {
+                get keyCode(){return key == 'up' ? 38 : 40;},
+            });
+            u.dispatchEvent(event);
         });
-        u.dispatchEvent(event);
-    });
+    }
 }
 
 // vimfx.addCommand({

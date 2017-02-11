@@ -20,7 +20,8 @@ var READ_LINE = [
     ['kill_line', '<c-k>'],
     ['yank', '<c-y>'],
     ['unix_line_discard', '<c-u>'],
-    //    ['unix_word_rubout', '<c-w>'],
+    ['unix_word_rubout', '<c-w>'],
+    ['kill_word', '<a-d>'],
     ['beginning_of_line', '<c-a>'],
     ['end_of_line', '<c-e>'],
 ]
@@ -39,10 +40,10 @@ var readLineCallbacks = {
         previousHistory(input);
     },
     'delete_char': (input, data) => {
-	deleteChar(input);
+	    deleteChar(input);
     },
     'backward_delete_char': (input, data) => {
-	backwardDeleteChar(input);
+	    backwardDeleteChar(input);
     },
     'kill_line': (input) => {
 	killLine(input);
@@ -53,9 +54,12 @@ var readLineCallbacks = {
     'unix_line_discard': (input, data) => {
         unixLineDiscard(input);
     },
-    // 'unix_word_rubout': (input, data) => {
-    // 	unixWordRubout(input);
-    // },
+    'unix_word_rubout': (input, data) => {
+     	unixWordRubout(input);
+    },
+    'kill_word': (input, data) => {
+        killWord(input);
+    },
     'beginning_of_line': (input, data) => {
         beginningOfLine(input);
     },
@@ -87,26 +91,26 @@ const KEY_CODES = {
 
 const EVENT_SEQUENCE = ['keydown', 'keypress', 'keyup'];
 
-function nextHistory(e) {
-    var u = window.activeElement;
-    ['keydown', 'keypress', 'keyup'].forEach(name => {
-        var event = new window.KeyboardEvent(name, {
-            keyCode: 40,
-        });
-        u.dispatchEvent(event);
-    });
-}
+// function nextHistory(e) {
+//     var u = window.activeElement;
+//     ['keydown', 'keypress', 'keyup'].forEach(name => {
+//         var event = new window.KeyboardEvent(name, {
+//             keyCode: 40,
+//         });
+//         u.dispatchEvent(event);
+//     });
+// }
 
-function previousHistory(e) {
-    var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"].getService(Components.interfaces.nsIWindowWatcher);
-    ww.focus();
-    ['keydown', 'keypress', 'keyup'].forEach(name => {
-        var event = new window.KeyboardEvent(name, {
-            keyCode: 38,
-        });
-        ww.dispatchEvent(event);
-    });
-}
+// function previousHistory(e) {
+//     var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"].getService(Components.interfaces.nsIWindowWatcher);
+//     ww.focus();
+//     ['keydown', 'keypress', 'keyup'].forEach(name => {
+//         var event = new window.KeyboardEvent(name, {
+//             keyCode: 38,
+//         });
+//         ww.dispatchEvent(event);
+//     });
+// }
 
 function deleteChar(e) {
     var before = e.value.substring(0, e.selectionStart);
@@ -151,8 +155,22 @@ function unixLineDiscard(e) {
     e.selectionStart = e.selectionEnd = start;
 }
 
-// function unixWordRubout(e) {
-// }
+function unixWordRubout(e) {
+    var before = e.value.substring(0, e.selectionStart);
+    var after = e.value.substring(e.selectionEnd, e.value.length);
+    var start =  before.search(/\s\S+\s*$/) + 1;
+    before = before.substring(0, start);
+    e.value = before + after;
+    e.selectionStart = e.selectionEnd = start;
+}
+
+function killWord(e) {
+    var before = e.value.substring(0, e.selectionStart);
+    var after = e.value.substring(e.selectionEnd, e.value.length);
+    after =  after.replace(/^\s*\S+/, '');
+    e.value = before + after;
+    e.selectionStart = e.selectionEnd = before.length;
+}    
 
 function beginningOfLine(e) {
     var start = e.value.lastIndexOf('\n', e.selectionStart) + 1;

@@ -1,7 +1,0 @@
-alias em="emacs -nw"
-alias p="pwd"
-alias c="clear"
-alias less="less -R"
-alias term="gnome-terminal"
-alias rm="rm -i"
-

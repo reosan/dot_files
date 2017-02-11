@@ -1,3 +1,0 @@
-#!/bin/bash
-
-python3 UTC+1_to_+9.py $1 "${1%.*}_JST.${1##*.}" 
