@@ -24,8 +24,17 @@ let findActiveElement = (document) => {
     return inner(document);
 };
 
+// let readLineBinding = (name) => {
+//     vimfx.listen(name, (data, cb) => {
+//         let active = findActiveElement(content.document);
+//         if (active && isEditableInput(active)) {
+//             readLineCallbacks[name](active, data);
+//         }
+//     });
+// };
+
 let readLineBinding = (name) => {
-    vimfx.listen(name, (data, cb) => {
+    vimfx.listen(name, (data) => {
         let active = findActiveElement(content.document);
         if (active && isEditableInput(active)) {
             readLineCallbacks[name](active, data);
@@ -42,3 +51,13 @@ READ_LINE.forEach(a => {
 // lineEditingBinding('end_of_line');
 
 // sendAsyncMessage('VimFx-config:tabCreated');
+
+// frame.js
+
+let {sendKey} = Cu.import(`${__dirname}/shared.js`, {})
+
+vimfx.listen('sendKey', ({key}) => {
+  sendKey(content, key)
+})
+
+//sendAsyncMessage('VimFx-config:sendKey')

@@ -6,13 +6,15 @@ const EXPORTED_SYMBOLS = [
     'readLineCallbacks',
     'readLineDataCallbacks',
     'READ_LINE',
+    'sendKey',
+    'KEY_CODES',
 ];
 
 var READ_LINE = [
     ['forward_char', '<c-f>'],
     ['backward_char', '<c-b>'],
-    // ['next_history', '<c-n>'],
-    // ['previous_history', '<c-p>'],
+    //['next_history', '<c-n>'],
+    //['previous_history', '<c-p>'],
     ['delete_char', '<c-d>'],
     ['backward_delete_char', '<c-h>'],
     ['kill_line', '<c-k>'],
@@ -78,12 +80,32 @@ function backwardChar(e) {
 	e.selectionStart == 0 ? 0 : e.selectionStart - 1;
 }
 
+const KEY_CODES = {
+  up: 38,
+  down: 40,
+};
+
+const EVENT_SEQUENCE = ['keydown', 'keypress', 'keyup'];
+
 function nextHistory(e) {
-    console.log('dummy');
+    var u = window.activeElement;
+    ['keydown', 'keypress', 'keyup'].forEach(name => {
+        var event = new window.KeyboardEvent(name, {
+            keyCode: 40,
+        });
+        u.dispatchEvent(event);
+    });
 }
 
 function previousHistory(e) {
-    console.log('dummy');
+    var ww = Components.classes["@mozilla.org/embedcomp/window-watcher;1"].getService(Components.interfaces.nsIWindowWatcher);
+    ww.focus();
+    ['keydown', 'keypress', 'keyup'].forEach(name => {
+        var event = new window.KeyboardEvent(name, {
+            keyCode: 38,
+        });
+        ww.dispatchEvent(event);
+    });
 }
 
 function deleteChar(e) {
@@ -92,6 +114,7 @@ function deleteChar(e) {
     after && e.selectionStart == e.selectionEnd && (after =  after.substring(1, after.length));
     e.value = before + after;
     e.selectionStart = e.selectionEnd = before.length;
+    //window.console.log('hoge');
 }
 
 function backwardDeleteChar(e) {
@@ -152,4 +175,16 @@ function isEditableInput(e) {
     let tag = cleanTagName(e);
     // XXX
     return tag == "input" || tag == "textarea";
+}
+
+// shared.js
+
+function sendKey(window, key) {
+  EVENT_SEQUENCE.forEach(name => {
+
+    let event = new window.KeyboardEvent(name, {
+      keyCode: KEY_CODES[key],
+    })
+    window.document.activeElement.dispatchEvent(event)
+  })
 }

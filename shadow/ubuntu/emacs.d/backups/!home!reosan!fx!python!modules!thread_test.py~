@@ -1,0 +1,12 @@
+import threading
+import time
+
+class fetch():
+    def __init__(self):
+        self.timer = threading(1.0, run)
+
+    def start(self):
+        self.timer.start()
+
+    def run(self):
+        print('fetch')

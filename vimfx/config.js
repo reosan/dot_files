@@ -22,6 +22,7 @@ let {Preferences} = Cu.import('resource://gre/modules/Preferences.jsm', {});
 Preferences.set({
     'browser.urlbar.maxRichResults': 10,
     'dom.popup_allowed_events': '',
+    'extensions.VimFx.config_file_directory': '~/dot_files/vimfx',
     // 'dom.popup_maximum': 20,
     // 'dom.ipc.processCount': 1,
 
@@ -43,6 +44,12 @@ const CUSTOM_COMMANDS = [
 	category: 'misc',
      },{	 key: ',c',
 		 func: ({vim}) => { vim.window.open('about:config'); },
+       }],
+    [{	name: 'open_about_addons',
+	    description: 'open about:addons',
+	    category: 'misc',
+     },{	 key: ',a',
+		     func: ({vim}) => { vim.window.open('about:addons'); },
        }],
 ];
 
@@ -75,8 +82,8 @@ const SHORTCUTS = [
     ['scroll_right', '<c-L>'],
     //       'j':         'scroll_down'
     //       'k':         'scroll_up'
-    ['scroll_down', 'j  <force><c-n>'],
-    ['scroll_up', 'k  <force><c-p>'],
+    ////['scroll_down', 'j  <force><c-n>'],
+    ////['scroll_up', 'k  <force><c-p>'],
     //       '<space>':   'scroll_page_down'
     //       '<s-space>': 'scroll_page_up'
     //       'd':         'scroll_half_page_down'
@@ -361,6 +368,51 @@ CUSTOM_COMMANDS.forEach(a => {
 });
 
 
+let {sendKey} = Cu.import(`${__dirname}/shared.js`, {})
+
+// vimfx.addCommand({
+//     name: 'send_up',
+//     description: 'Send the <up> key',
+//     category: 'insert',
+// }, helper_send_key.bind(null, 'up'));
+// vimfx.set('custom.mode.normal.send_up', '<force><c-p>');
+
+vimfx.addCommand({
+    name: 'send_up',
+    description: 'Send the <up> key',
+    category: 'insert',
+}, double_send_key.bind(null, 'up'));
+vimfx.set('custom.mode.normal.send_up', '<force><c-p>');
+
+vimfx.addCommand({
+    name: 'send_down',
+    description: 'Send the <down> key',
+    category: 'insert',
+}, double_send_key.bind(null, 'down'));
+vimfx.set('custom.mode.normal.send_down', '<force><c-n>');
+
+function double_send_key(key, {vim, uiEvent}) {
+    helper_send_key(key, {vim, uiEvent});
+    url_send_key(key, {vim});
+}
+
+function helper_send_key(key, {vim, uiEvent}) {
+    if (uiEvent) {
+        sendKey(vim.window, key)
+    } else {
+        vimfx.send(vim, 'sendKey', {key})
+    }
+}
+
+function url_send_key(key, {vim}) {
+    var u = vim.window.document.activeElement;
+    ['keydown', 'keypress', 'keyup'].forEach(name => {
+        var event = new vim.window.KeyboardEvent(name, {
+            get keyCode(){return key == 'up' ? 40 : 38;},
+        });
+        u.dispatchEvent(event);
+    });
+}
 
 // vimfx.addCommand({
 //     name: 'pocket',
