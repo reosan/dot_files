@@ -30,36 +30,98 @@ PROMPT_COMMAND=$(echo -n \
 	'pc=$?;' \
 	'printf "\033[?25l";' \
 	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
+	'printf "\033[s";' \
+    'printf "\033[;f";' \
+    'uh=$(whoami)@$(hostname);' \
 	'printf' \
 	$(IFS=$'\n'; echo_cat $(for i in \
+        $(:||: PWD) \
 		'"' \
-		'\033[s' \
-		'\033[1;$(( $COLUMNS - ${pd} +1 ))f' \
+		'\033[$(( $COLUMNS - ${pd} ))C' \
 		'$(for n in $(seq 1 ${pd});' \
 		'do ' \
 			'printf '"' '"';' \
 		'done)' \
-		'\e[$(( ${WD_COL_NUM} -1 ))D' \
+		'\e[$(( ${WD_COL_NUM} ))D' \
 		'\033[1m${PWD}\e[0m\n' \
-		'\033[$(( $COLUMNS - 10 ))C' \
-		'$(LANG=en_US.UTF-8 date +'"'"'%a %b %d'"'"')\n' \
-		'\033[$(( $COLUMNS - 5 ))C' \
-		'$(TZ=Asia/Tokyo date +'"'"'%H:%M'"'"')' \
-		'\033[u' \
-		'"' \
-		';'
+		'";'
 		do
 			echo $i
 		done
 	)) \
+	'printf' \
+	$(IFS=$'\n'; echo_cat $(for i in \
+        $(:||: username@hostname) \
+		'"' \
+		'\033[$(( $COLUMNS - $(echo -n $uh | wc -m) ))C' \
+        '$uh\n' \
+		'";'
+		do
+			echo $i
+		done
+	)) \
+	$(:||: 'printf' \
+	$(IFS=$'\n'; echo_cat $(for i in \
+        $(:||: Week Month Day) \
+		'"' \
+		'\033[$(( $COLUMNS - 10 ))C' \
+		'$(LANG=en_US.UTF-8 date +'"'%a %b %d'"')\n' \
+		'";'
+		do
+			echo $i
+		done
+	)) ) \
+	$(:||: 'printf' \
+	$(IFS=$'\n'; echo_cat $(for i in \
+        $(:||: HH:MM) \
+		'"' \
+		'\033[$(( $COLUMNS - 5 ))C' \
+		'$(TZ=Asia/Tokyo date +'"'%H:%M'"')' \
+		'";'
+		do
+			echo $i
+		done
+	)) ) \
+    'printf "\033[u";' \
 	'printf "\033[?25h";' \
 	'pd=$(echo -n $PWD | wc -m)'
 )
 
+# PROMPT_COMMAND=$(echo -n \
+# 	'pc=$?;' \
+# 	'printf "\033[?25l";' \
+# 	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
+# 	'printf' \
+# 	$(IFS=$'\n'; echo_cat $(for i in \
+# 		'"' \
+# 		'\033[s' \
+# 		'\033[1;$(( $COLUMNS - ${pd} ))f' \
+# 		'$(for n in $(seq 1 ${pd});' \
+# 		'do ' \
+# 			'printf '"' '"';' \
+# 		'done)' \
+# 		'\e[$(( ${WD_COL_NUM} -1 ))D' \
+# 		'\033[1m${PWD}\e[0m\n' \
+# 		'\033[$(( $COLUMNS - 10 ))C' \
+# 		'$(LANG=en_US.UTF-8 date +'"'%a %b %d'"')\n' \
+# 		'\033[$(( $COLUMNS - 5 ))C' \
+# 		'$(TZ=Asia/Tokyo date +'"'%H:%M'"')' \
+# 		'\033[u' \
+# 		'"' \
+# 		';'
+# 		do
+# 			echo $i
+# 		done
+# 	)) \
+# 	'printf "\033[?25h";' \
+# 	'pd=$(echo -n $PWD | wc -m)'
+# )
+
 PS1=$(echo -n \
-   '\[\e[0m\]$pc' \
+   '\[\e]2;'"$USER@$HOSTNAME $(basename $SHELL) SHLVL=$SHLVL $PWD"'\a\]''\[\e[0m\]$pc' \
+   '\[\e[0;$(if [ $pc -eq 0 ]; then echo "32m\];)"; else echo "31m\]:("; fi)\[\e[0m\]' \
+   '\j' \
    '$SHLVL' \
-   '\[\e[0;$(if [ $pc -eq 0 ]; then echo "32m\];)"; else echo "31m\]:("; fi)' \
    '\[\e[38;5;248m\]\W' \
    '\[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$' \
    '\[\e[38;5;248m\]' \
