@@ -2,64 +2,74 @@
 
 trap 'printf "\e[0m"' DEBUG
 
-# PROMPT_COMMAND='pc=$?; wd=$(pwd | wc -m); printf "\e[s\e[1;$(expr $COLUMNS - ${wd} + 1)f$(for n in $(seq 1 ${wd});do printf " ";done)\e[${wd}D\e[1m$(pwd)\e[0m\n\e[$(expr $COLUMNS - 11)C$(LANG=en_US.UTF-8 date +"%a %b %d")\n\e[$(expr $COLUMNS - 6)C$(TZ="Asia/Tokyo" date +"%H:%M")\e[u"; wd=$(pwd | wc -m)'
-# PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$ \[\e[38;5;248m\]'
-
 # "\e[?25l" => hides the cursor.
-# 'WD_COL_NUM=$(PWD | wc =m);' => working directory columns number.
+# 'wd_=$(PWD | wc =m);' => working directory columns number.
 # '\e[s' => save cursor position.
 # '\e[<n>;<m>f' => horizontal and vertical position. == <n>;<m>H
 # '\e[<n>D' => cursor back.
 # '\e[<n>C' => cursor forward.
 # '\e[u' => restore cursor position.
 # "\e[25h" => shows the cursor.
+# set -f => no glob.
 
-echo_cat() {
-    local ret
-    for tmp in $*
-    do
-	ret+=$tmp
-    done
-    echo -n $ret
-}
+set -f
+PS1=$(IFS=''; for i in \
+    '\[\e]2;'"$USER@$HOSTNAME $(basename $SHELL) ::: SHLVL:$SHLVL "'\$?:$? jobs:\j ::: \w''\a\]' \
+    '\[\e[38;5;248m\]'"${HOSTNAME%.*}"' ' \
+    '\[\e[0;$(if [ $? -eq 0 ]; then echo "32m\];)"; else echo "31m\]:("; fi)\[\e[0m\]'' ' \
+    '\[\e[38;5;248m\]\W'' ' \
+    '\[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$'' ' \
+    '\[\e[38;5;248m\]'
+  do
+      echo -n $i
+  done
+   )
+set +f
 
-pc=$?
-pd=$(echo -n $PWD | wc -m)
+pd_=$(echo -n $PWD | wc -m)
 
+set -f
 PROMPT_COMMAND=$(echo -n \
-	'pc=$?;' \
-	'printf "\033[?25l";' \
-	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
-	'printf "\033[s";' \
-    'printf "\033[;f";' \
+	'wd_=$(echo -n $PWD | wc -m);' \
+    'printf' \
+	$(IFS=''; for i in \
+		'"' \
+        '\033[?25l' \
+        '\033[s' \
+        '\033[;f' \
+		'";'
+		do
+			echo -n $i
+		done
+	) \
     'uh=$(whoami)@$(hostname);' \
 	'printf' \
-	$(IFS=$'\n'; echo_cat $(for i in \
+	$(IFS=''; for i in \
         $(:||: PWD) \
 		'"' \
-		'\033[$(( $COLUMNS - ${pd} ))C' \
-		'$(for n in $(seq 1 ${pd});' \
+		'\033[$(( $COLUMNS - ${pd_} ))C' \
+		'$(for n in $(seq 1 ${pd_});' \
 		'do ' \
 			'printf '"' '"';' \
 		'done)' \
-		'\e[$(( ${WD_COL_NUM} ))D' \
+		'\e[${wd_}D' \
 		'\033[1m${PWD}\e[0m\n' \
 		'";'
 		do
-			echo $i
+			echo -n $i
 		done
-	)) \
+	) \
 	'printf' \
-	$(IFS=$'\n'; echo_cat $(for i in \
+	$(IFS=''; for i in \
         $(:||: username@hostname) \
 		'"' \
 		'\033[$(( $COLUMNS - $(echo -n $uh | wc -m) ))C' \
         '$uh\n' \
 		'";'
 		do
-			echo $i
+			echo -n $i
 		done
-	)) \
+	) \
 	$(:||: 'printf' \
 	$(IFS=$'\n'; echo_cat $(for i in \
         $(:||: Week Month Day) \
@@ -84,48 +94,10 @@ PROMPT_COMMAND=$(echo -n \
 	)) ) \
     'printf "\033[u";' \
 	'printf "\033[?25h";' \
-	'pd=$(echo -n $PWD | wc -m)'
+	'pd_=$(echo -n $PWD | wc -m)'
 )
+set +f
 
-# PROMPT_COMMAND=$(echo -n \
-# 	'pc=$?;' \
-# 	'printf "\033[?25l";' \
-# 	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
-# 	'printf' \
-# 	$(IFS=$'\n'; echo_cat $(for i in \
-# 		'"' \
-# 		'\033[s' \
-# 		'\033[1;$(( $COLUMNS - ${pd} ))f' \
-# 		'$(for n in $(seq 1 ${pd});' \
-# 		'do ' \
-# 			'printf '"' '"';' \
-# 		'done)' \
-# 		'\e[$(( ${WD_COL_NUM} -1 ))D' \
-# 		'\033[1m${PWD}\e[0m\n' \
-# 		'\033[$(( $COLUMNS - 10 ))C' \
-# 		'$(LANG=en_US.UTF-8 date +'"'%a %b %d'"')\n' \
-# 		'\033[$(( $COLUMNS - 5 ))C' \
-# 		'$(TZ=Asia/Tokyo date +'"'%H:%M'"')' \
-# 		'\033[u' \
-# 		'"' \
-# 		';'
-# 		do
-# 			echo $i
-# 		done
-# 	)) \
-# 	'printf "\033[?25h";' \
-# 	'pd=$(echo -n $PWD | wc -m)'
-# )
-
-PS1=$(echo -n \
-   '\[\e]2;'"$USER@$HOSTNAME $(basename $SHELL) SHLVL=$SHLVL $PWD"'\a\]''\[\e[0m\]$pc' \
-   '\[\e[0;$(if [ $pc -eq 0 ]; then echo "32m\];)"; else echo "31m\]:("; fi)\[\e[0m\]' \
-   '\j' \
-   '$SHLVL' \
-   '\[\e[38;5;248m\]\W' \
-   '\[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$' \
-   '\[\e[38;5;248m\]' \
-)
 
 PS2='>> '
 
@@ -140,7 +112,7 @@ flasher() {
 }
 
 
-colors() {
+colors33_43() {
     local fgc bgc vals seq0
 
     printf "Color escapes are %s\n" '\e[${value};...;${value}m'
@@ -220,7 +192,7 @@ colors256() {
   printf "\033[0m "
 }
 
-colors_all() {
+colors() {
     local h i j k t w LorS
     SorL=$(( $COLUMNS < 144 ))
     echo; echo
@@ -357,3 +329,48 @@ colors_all() {
 
     echo; echo
 }
+
+# PROMPT_COMMAND='pc=$?; wd=$(pwd | wc -m); printf "\e[s\e[1;$(expr $COLUMNS - ${wd} + 1)f$(for n in $(seq 1 ${wd});do printf " ";done)\e[${wd}D\e[1m$(pwd)\e[0m\n\e[$(expr $COLUMNS - 11)C$(LANG=en_US.UTF-8 date +"%a %b %d")\n\e[$(expr $COLUMNS - 6)C$(TZ="Asia/Tokyo" date +"%H:%M")\e[u"; wd=$(pwd | wc -m)'
+# PS1='\[\e[0m\]$pc $SHLVL $(if [ $pc -eq 0 ]; then echo "\[\e[0;32m\];)"; else echo "\[\e[0;31m\]:("; fi) \[\e[38;5;248m\]\W \[\e[0;$([ $HOME == "/root" ] && echo "31" || echo "34")m\]\$ \[\e[38;5;248m\]'
+
+
+# echo_cat() {
+#     local ret
+#     for tmp in $*
+#     do
+# 	ret+=$tmp
+#     done
+#     echo -n $ret
+# }
+
+# PROMPT_COMMAND=$(echo -n \
+# 	'pc=$?;' \
+# 	'printf "\033[?25l";' \
+# 	'WD_COL_NUM=$(echo -n $PWD | wc -m);' \
+# 	'printf' \
+# 	$(IFS=$'\n'; echo_cat $(for i in \
+# 		'"' \
+# 		'\033[s' \
+# 		'\033[1;$(( $COLUMNS - ${pd} ))f' \
+# 		'$(for n in $(seq 1 ${pd});' \
+# 		'do ' \
+# 			'printf '"' '"';' \
+# 		'done)' \
+# 		'\e[$(( ${WD_COL_NUM} -1 ))D' \
+# 		'\033[1m${PWD}\e[0m\n' \
+# 		'\033[$(( $COLUMNS - 10 ))C' \
+# 		'$(LANG=en_US.UTF-8 date +'"'%a %b %d'"')\n' \
+# 		'\033[$(( $COLUMNS - 5 ))C' \
+# 		'$(TZ=Asia/Tokyo date +'"'%H:%M'"')' \
+# 		'\033[u' \
+# 		'"' \
+# 		';'
+# 		do
+# 			echo $i
+# 		done
+# 	)) \
+# 	'printf "\033[?25h";' \
+# 	'pd=$(echo -n $PWD | wc -m)'
+# )
+
+

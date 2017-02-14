@@ -47,10 +47,15 @@ fi
 
 # ワイルドカード展開(bash)
 shopt -s failglob
+shopt -s globstar
+shopt -s extglob
+# shopt -s nocaseglob
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-
+shopt -s autocd
+shopt -s checkjobs
+shopt -s cmdhist
+shopt -s histappend
 # Export
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
