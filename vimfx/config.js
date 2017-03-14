@@ -341,6 +341,7 @@ let readLineBinding = (opts) => {
     );
 };
 
+
 READ_LINE.forEach(a => {
     ((name, key) => {
 	readLineBinding({
@@ -367,6 +368,21 @@ CUSTOM_COMMANDS.forEach(a => {
     vimfx.addCommand(a[0],a[1]['func']);
     vimfx.set(`custom.mode.normal.${a[0]['name']}`, a[1]['key']);
 });
+
+
+// const CUSTOM_COMMANDS_CARET = [
+//     [{	name: 'all_select',
+// 	description: 'all select',
+// 	category: 'misc',
+//      },{	 key: 'q',
+// 		     func: ({vim}) => { alert(vim.window.document.activeElement.tagName); },
+//        }],
+// ];
+
+// CUSTOM_COMMANDS_CARET.forEach(a => {
+//     vimfx.addCommand(a[0],a[1]['func']);
+//     vimfx.set(`custom.mode.caret.${a[0]['name']}`, a[1]['key']);
+// });
 
 
 let {sendKey} = Cu.import(`${__dirname}/shared.js`, {})
